@@ -7,6 +7,7 @@ export interface AuctionItem {
   seller: number;
   current_highest_bid: string;
   is_expired: boolean;
+  winner: string | null;
   image?: string;
 }
 

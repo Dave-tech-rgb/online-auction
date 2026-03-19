@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import CreateAuction from './pages/CreateAuction/CreateAuction';
+import EditAuction from './pages/EditAuction/EditAuction';  
 import { AuthProvider } from './context/AuthContext';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/create-auction" element={<CreateAuction />} />
+            <Route path="/edit-auction/:id" element={<EditAuction />} />
           </Routes>
         </MainLayout>
       </AuthProvider>
