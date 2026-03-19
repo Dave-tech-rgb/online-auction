@@ -1,0 +1,19 @@
+export interface AuctionItem {
+  id: number;
+  title: string;
+  description: string;
+  starting_price: string;
+  end_time: string;
+  seller: number;
+  current_highest_bid: string;
+  is_expired: boolean;
+  image?: string;
+}
+
+export interface Bid {
+  id: number;
+  item: number;
+  bidder: number;
+  amount: string;
+  timestamp: string;
+}

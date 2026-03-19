@@ -1,13 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from typing import Any # Added for type hinting
 
 class AuctionItem(models.Model):
+    bids: Any 
+
     title = models.CharField(max_length=255)
     description = models.TextField()
     starting_price = models.DecimalField(max_digits=10, decimal_places=2)
     end_time = models.DateTimeField()
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='auctions')
+    image = models.ImageField(upload_to='auction_images/', blank=True, null=True)
 
     @property
     def current_highest_bid(self):
@@ -23,7 +27,7 @@ class AuctionItem(models.Model):
 
 class Bid(models.Model):
     item = models.ForeignKey(AuctionItem, on_delete=models.CASCADE, related_name='bids')
-    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bids')
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name='placed_bids')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
 

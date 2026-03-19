@@ -1,7 +1,15 @@
 from rest_framework import viewsets, permissions, generics
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.models import User
 from django.utils import timezone
 from auction.models import AuctionItem, Bid
-from auction.serializers import AuctionItemSerializer, BidSerializer
+from auction.serializers import AuctionItemSerializer, BidSerializer, UserSerializer
+
+class RegisterAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
 
 class AuctionItemViewSet(viewsets.ModelViewSet):
     """

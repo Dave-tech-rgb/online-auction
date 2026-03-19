@@ -1,0 +1,26 @@
+.cardWrapper {
+  /* Provide a subtle outline on hover for the card */
+  position: relative;
+}
+
+.cardWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 1rem; /* match tailwind rounded-2xl */
+  padding: 2px; 
+  background: linear-gradient(135deg, transparent 40%, #3b82f6 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.cardWrapper:hover::before {
+  opacity: 0.6;
+}
