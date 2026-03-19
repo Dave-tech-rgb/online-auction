@@ -18,15 +18,16 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class AuctionItemSerializer(serializers.ModelSerializer):
-    # These read-only fields expose the @property methods to the frontend
     current_highest_bid = serializers.ReadOnlyField()
     is_expired = serializers.ReadOnlyField()
+    winner = serializers.ReadOnlyField()                  
 
     class Meta:
         model = AuctionItem
         fields = [
-            'id', 'title', 'description', 'starting_price', 
-            'end_time', 'seller', 'current_highest_bid', 'is_expired', 'image'
+            'id', 'title', 'description', 'starting_price',
+            'end_time', 'seller', 'current_highest_bid',
+            'is_expired', 'winner', 'image'               
         ]
         read_only_fields = ['seller']
 
@@ -39,20 +40,16 @@ class BidSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         item = attrs.get('item')
         amount = attrs.get('amount')
-        
-        # Access the user making the request
+
         request = self.context.get('request')
         user = request.user if request else None
 
-        # 1. Logic: Security - Users cannot bid on their own auction
         if user and item.seller == user:
             raise serializers.ValidationError({"item": "You cannot bid on your own auction."})
 
-        # 2. Logic: Auction closes at specific time
         if item.is_expired:
             raise serializers.ValidationError({"item": "This auction has already closed."})
 
-        # 3. Logic: Each new bid must be higher than the previous bid
         if amount <= item.current_highest_bid:
             raise serializers.ValidationError({
                 "amount": f"Bid must be higher than the current highest bid of {item.current_highest_bid}."

@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'online_auction_db',
         'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'asin616',
         'HOST': 'localhost',
         'PORT': '5432',
     }

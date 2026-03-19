@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from typing import Any # Added for type hinting
+from typing import Any
 
 class AuctionItem(models.Model):
-    bids: Any 
+    bids: Any
 
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -21,6 +21,13 @@ class AuctionItem(models.Model):
     @property
     def is_expired(self):
         return timezone.now() > self.end_time
+
+    @property
+    def winner(self):                                          
+        if self.is_expired:                                  
+            top_bid = self.bids.order_by('-amount').first()   
+            return top_bid.bidder.username if top_bid else None 
+        return None                                            
 
     def __str__(self):
         return self.title
