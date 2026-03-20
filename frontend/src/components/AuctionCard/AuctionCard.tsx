@@ -11,16 +11,13 @@ import api from '../../api/axios';
 interface AuctionCardProps {
   item: AuctionItem;
   onBidSuccess: (auctionId: number, newAmount: string) => void;
-  onDeleteSuccess: (auctionId: number) => void;   // ← NEW
+  onDeleteSuccess: (auctionId: number) => void;
 }
 
 const AuctionCard: React.FC<AuctionCardProps> = ({ item, onBidSuccess, onDeleteSuccess }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const isOwner = Number(user?.user_id) === item.seller; 
-  console.log('user:', user);           
-  console.log('item.seller:', item.seller); 
-  console.log('isOwner:', isOwner); 
+  const isOwner = Number(user?.user_id) === item.seller;
 
   const handleExpire = () => {};
 
@@ -40,38 +37,52 @@ const AuctionCard: React.FC<AuctionCardProps> = ({ item, onBidSuccess, onDeleteS
 
   return (
     <div className={`bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${styles.cardWrapper}`}>
-      {/* Image Area */}
+
       <div className="w-full h-48 bg-slate-100 border-b border-slate-200 flex items-center justify-center relative overflow-hidden group">
         {item.image ? (
-          <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <img
+            src={item.image}
+            alt={item.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
         ) : (
           <span className="text-slate-400 font-medium">No Image</span>
         )}
       </div>
 
       <div className="p-6 flex flex-col flex-grow">
+
         <div className="flex justify-between items-start mb-3 gap-2">
-          <h3 className="text-xl font-bold text-slate-900 line-clamp-2 leading-tight" title={item.title}>
-            {item.title}
-          </h3>
+          <div>
+            <h3
+              onClick={() => navigate(`/auction/${item.id}`)}
+              className="text-xl font-bold text-slate-900 line-clamp-2 leading-tight cursor-pointer hover:text-blue-600 transition-colors"
+              title={item.title}
+            >
+              {item.title}
+            </h3>
+            <p className="text-xs text-slate-400 mt-0.5">Click title to view details</p>
+          </div>
           <span className="shrink-0 inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200 shadow-sm">
             Lot #{item.id}
           </span>
         </div>
 
+    
         <p className="text-slate-600 text-sm mb-5 flex-grow line-clamp-3 leading-relaxed">
           {item.description}
         </p>
 
-        {/* Winner Banner — shows when auction is expired */}
+      
         {item.is_expired && (
           <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
             <p className="text-yellow-800 font-bold text-sm">
-              🏆 Winner: {item.winner ?? 'No bids placed'}
+              Winner: {item.winner ?? 'No bids placed'}
             </p>
           </div>
         )}
 
+       
         <div className="space-y-3 text-sm mt-auto border-t border-slate-100 pt-4">
           <div className="flex justify-between items-center text-slate-500">
             <span className="font-medium">Starting Price</span>
@@ -83,6 +94,7 @@ const AuctionCard: React.FC<AuctionCardProps> = ({ item, onBidSuccess, onDeleteS
           </div>
         </div>
 
+        
         <div className="mt-5">
           <BiddingSection
             auctionId={item.id}
@@ -96,7 +108,7 @@ const AuctionCard: React.FC<AuctionCardProps> = ({ item, onBidSuccess, onDeleteS
           />
         </div>
 
-        {/* Edit & Delete — only visible to the seller */}
+       
         {isOwner && (
           <div className="flex gap-2 mt-4">
             <button
@@ -109,10 +121,11 @@ const AuctionCard: React.FC<AuctionCardProps> = ({ item, onBidSuccess, onDeleteS
               onClick={handleDelete}
               className="flex-1 py-2 px-4 border border-red-200 hover:bg-red-50 text-red-500 rounded-md text-sm font-semibold transition-colors"
             >
-             Delete
+              Delete
             </button>
           </div>
         )}
+
       </div>
     </div>
   );
