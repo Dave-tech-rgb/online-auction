@@ -5,6 +5,7 @@ export interface AuctionItem {
   starting_price: string;
   end_time: string;
   seller: number;
+  seller_username: string;
   current_highest_bid: string;
   is_expired: boolean;
   winner: string | null;

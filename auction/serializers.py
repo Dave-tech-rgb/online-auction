@@ -20,20 +20,22 @@ class UserSerializer(serializers.ModelSerializer):
 class AuctionItemSerializer(serializers.ModelSerializer):
     current_highest_bid = serializers.ReadOnlyField()
     is_expired = serializers.ReadOnlyField()
-    winner = serializers.ReadOnlyField()                  
+    winner = serializers.ReadOnlyField()
+    seller_username = serializers.SerializerMethodField()  
 
     class Meta:
         model = AuctionItem
         fields = [
             'id', 'title', 'description', 'starting_price',
-            'end_time', 'seller', 'current_highest_bid',
-            'is_expired', 'winner', 'image'               
+            'end_time', 'seller', 'seller_username', 'current_highest_bid',
+            'is_expired', 'winner', 'image'
         ]
         read_only_fields = ['seller']
 
+    def get_seller_username(self, obj):                    
+        return obj.seller.username if obj.seller else None
+
 class BidSerializer(serializers.ModelSerializer):
-    # Expose the bidder's username so the frontend can display
-    # names instead of raw user IDs in Bid History.
     bidder_username = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
