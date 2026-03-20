@@ -39,6 +39,10 @@ const Home: React.FC = () => {
     );
   };
 
+  const handleDeleteSuccess = (auctionId: number) => {
+    setAuctions(prevAuctions => prevAuctions.filter(auction => auction.id !== auctionId));
+  };
+
   return (
     <div className={`w-full ${styles.homeWrapper}`}>
       <Hero />
@@ -97,7 +101,8 @@ const Home: React.FC = () => {
               <AuctionCard 
                 key={item.id} 
                 item={item} 
-                onBidSuccess={handleBidSuccess} 
+                onBidSuccess={handleBidSuccess}
+                onDeleteSuccess={handleDeleteSuccess}
               />
             ))}
           </div>

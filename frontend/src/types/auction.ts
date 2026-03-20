@@ -15,6 +15,7 @@ export interface Bid {
   id: number;
   item: number;
   bidder: number;
+  bidder_username: string | null;
   amount: string;
   timestamp: string;
 }
