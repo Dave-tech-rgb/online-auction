@@ -2,6 +2,7 @@ import React from 'react';
 import type { AuctionItem } from '../../types/auction';
 import CountdownTimer from '../CountdownTimer';
 import BiddingSection from '../BiddingSection';
+import BidHistory from '../BidHistory/BidHistory';
 import styles from './AuctionCard.module.css';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -88,6 +89,10 @@ const AuctionCard: React.FC<AuctionCardProps> = ({ item, onBidSuccess, onDeleteS
             currentHighestBid={item.current_highest_bid}
             isExpired={item.is_expired}
             onBidSuccess={handleSuccessfulBid}
+          />
+          <BidHistory
+            auctionId={item.id}
+            currentHighestBid={item.current_highest_bid}
           />
         </div>
 

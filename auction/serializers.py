@@ -32,10 +32,17 @@ class AuctionItemSerializer(serializers.ModelSerializer):
         read_only_fields = ['seller']
 
 class BidSerializer(serializers.ModelSerializer):
+    # Expose the bidder's username so the frontend can display
+    # names instead of raw user IDs in Bid History.
+    bidder_username = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Bid
-        fields = ['id', 'item', 'bidder', 'amount', 'timestamp']
+        fields = ['id', 'item', 'bidder', 'bidder_username', 'amount', 'timestamp']
         read_only_fields = ['bidder', 'timestamp']
+
+    def get_bidder_username(self, obj):
+        return obj.bidder.username if obj.bidder else None
 
     def validate(self, attrs):
         item = attrs.get('item')
