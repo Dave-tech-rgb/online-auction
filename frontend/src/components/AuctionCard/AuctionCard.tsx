@@ -73,6 +73,10 @@ const AuctionCard: React.FC<AuctionCardProps> = ({ item, onBidSuccess, onDeleteS
           {item.description}
         </p>
 
+        <p className="text-xs text-slate-400 mb-3">
+           Listed by <span className="font-semibold text-slate-600">{item.seller_username}</span>
+        </p>
+
       
         {item.is_expired && (
           <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
