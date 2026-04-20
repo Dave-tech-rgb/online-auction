@@ -3,7 +3,7 @@ from auction.views import (
     AuctionItemListCreateView,
     AuctionItemDetailView,
     BidHistoryAPIView,
-    BidCreateAPIView
+    BidCreateAPIView,
 )
 
 urlpatterns = [
