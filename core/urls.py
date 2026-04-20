@@ -20,7 +20,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from auction.views import RegisterAPIView
+from auction.views import RegisterAPIView # type: ignore
 
 urlpatterns = [
     path('admin/', admin.site.urls),
