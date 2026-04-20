@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import api from '../api/axios';
 
-interface User {
+interface JwtPayload {
   user_id: number;
-  username?: string;
+  email: string;
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: JwtPayload | null;
   login: (access: string, refresh: string) => void;
   logout: () => void;
   isLoading: boolean;
@@ -24,17 +23,16 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<JwtPayload | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
       try {
-        const decoded = jwtDecode<User>(token);
+        const decoded = jwtDecode<JwtPayload>(token);
         setUser(decoded);
-      } catch (error) {
-        console.error('Failed to decode token on load', error);
+      } catch {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
       }
@@ -45,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = (access: string, refresh: string) => {
     localStorage.setItem('access_token', access);
     localStorage.setItem('refresh_token', refresh);
-    const decoded = jwtDecode<User>(access);
+    const decoded = jwtDecode<JwtPayload>(access);
     setUser(decoded);
   };
 

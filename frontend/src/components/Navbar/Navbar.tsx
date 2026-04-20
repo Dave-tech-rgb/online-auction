@@ -12,6 +12,9 @@ const Navbar: React.FC = () => {
     navigate('/');
   };
 
+  const displayName = user?.email ? user.email.split('@')[0] : '';
+  const initial = displayName?.[0]?.toUpperCase() ?? '?';
+
   return (
     <header className="bg-slate-900 border-b border-slate-800 shadow-md sticky top-0 z-50 w-full transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -23,7 +26,7 @@ const Navbar: React.FC = () => {
             BidMaster Pro
           </h1>
         </Link>
-        
+
         <nav className="hidden md:flex items-center space-x-8">
           <ul className="flex space-x-8 text-sm font-semibold text-slate-300">
             <li>
@@ -44,8 +47,13 @@ const Navbar: React.FC = () => {
         <div className="flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-4">
-              <span className="text-slate-300 text-sm font-medium">Hello, {user.username }</span>
-              <button 
+              <Link to="/profile" className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors">
+                <div className="w-8 h-8 bg-blue-600 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-colors">
+                  <span className="text-white font-bold text-sm">{initial}</span>
+                </div>
+                <span className="text-sm font-medium hidden sm:block">{displayName}</span>
+              </Link>
+              <button
                 onClick={handleLogout}
                 className="text-sm font-medium text-white bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-md transition-colors"
               >
@@ -54,16 +62,10 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <Link
-                to="/login"
-                className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
-              >
+              <Link to="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
                 Log in
               </Link>
-              <Link
-                to="/signup"
-                className="text-sm font-medium text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-md transition-colors shadow-sm"
-              >
+              <Link to="/signup" className="text-sm font-medium text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-md transition-colors shadow-sm">
                 Sign up
               </Link>
             </div>
