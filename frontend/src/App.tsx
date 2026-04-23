@@ -6,6 +6,7 @@ import Signup from './pages/Signup/Signup';
 import CreateAuction from './pages/CreateAuction/CreateAuction';
 import EditAuction from './pages/EditAuction/EditAuction';
 import AuctionDetail from './pages/AuctionDetail/AuctionDetail';
+import Profile from './pages/Profile/Profile';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/create-auction" element={<PrivateRoute><CreateAuction /></PrivateRoute>} />
             <Route path="/edit-auction/:id" element={<PrivateRoute><EditAuction /></PrivateRoute>} />
             <Route path="/auction/:id" element={<PrivateRoute><AuctionDetail /></PrivateRoute>} />
+            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           </Routes>
         </MainLayout>
       </AuthProvider>

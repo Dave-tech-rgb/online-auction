@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
 
-BASE_DIR = Path(_file_).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-tnxux9!pcj)m1qf4oeyzigr=z0_%m9^3pbw1l64bu+=%u5-e-5'
 
@@ -58,7 +58,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'online_auction_db',
         'USER': 'postgres',
-        'PASSWORD': 'asin616',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
