@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f1f5f9;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .header {
+      background: linear-gradient(135deg, #1e293b 0%, #1d4ed8 100%);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .header h1 {
+      color: #ffffff;
+      font-size: 28px;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .header p {
+      color: #93c5fd;
+      margin: 8px 0 0;
+      font-size: 14px;
+    }
+    .body {
+      padding: 40px 32px;
+    }
+    .body h2 {
+      color: #1e293b;
+      font-size: 20px;
+      margin: 0 0 12px;
+    }
+    .body p {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 24px;
+    }
+    .btn {
+      display: inline-block;
+      background: #1d4ed8;
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+    }
+    .btn:hover {
+      background: #1e40af;
+    }
+    .note {
+      margin-top: 32px;
+      padding: 16px;
+      background: #f8fafc;
+      border-left: 4px solid #1d4ed8;
+      border-radius: 4px;
+      color: #64748b;
+      font-size: 13px;
+    }
+    .footer {
+      padding: 24px 32px;
+      text-align: center;
+      background: #f8fafc;
+      color: #94a3b8;
+      font-size: 12px;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔨 BidMaster Pro</h1>
+      <p>Online Auction Platform</p>
+    </div>
+    <div class="body">
+      <h2>Activate Your Account</h2>
+      <p>Hello <strong>{{ user.email }}</strong>,</p>
+      <p>
+        Thank you for registering on <strong>BidMaster Pro</strong>!
+        Click the button below to activate your account and start bidding.
+      </p>
+      <a href="http://localhost:5173/activate/{{ uid }}/{{ token }}" class="btn">
+        Activate Account
+      </a>
+      <div class="note">
+        If you didn't create an account, you can safely ignore this email.
+        This link will expire in <strong>24 hours</strong>.
+      </div>
+    </div>
+    <div class="footer">
+      &copy; 2025 BidMaster Pro &mdash; All rights reserved
+    </div>
+  </div>
+</body>
+</html>
