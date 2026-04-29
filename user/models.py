@@ -22,7 +22,6 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=255, blank=True)
-    # Extended profile fields
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     address = models.CharField(max_length=255, blank=True)
@@ -30,10 +29,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     birthday = models.DateField(null=True, blank=True)
     phone = models.CharField(max_length=20, blank=True)
     bio = models.TextField(blank=True)
-    profile_picture = models.ImageField(upload_to='profiles/', null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)  
     is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'

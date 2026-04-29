@@ -1,17 +1,34 @@
-from rest_framework import permissions, generics
+from rest_framework import permissions, generics, serializers
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.query import QuerySet
 from auction.models import AuctionItem, Bid
 from auction.serializers import AuctionItemSerializer, BidSerializer
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'password']
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
+
+
+class RegisterAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class AuctionItemListCreateView(generics.ListCreateAPIView):
     serializer_class = AuctionItemSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet: # pyright: ignore[reportIncompatibleMethodOverride]
         return AuctionItem.objects.filter(end_time__gt=timezone.now())
 
     def perform_create(self, serializer):
@@ -29,15 +46,13 @@ class AuctionItemDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response({'error': 'Only the seller can delete this auction.'}, status=status.HTTP_403_FORBIDDEN)
         return super().destroy(request, *args, **kwargs)
 
-
 class BidHistoryAPIView(generics.ListAPIView):
     serializer_class = BidSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet: # pyright: ignore[reportIncompatibleMethodOverride]
         item_id = self.kwargs.get('item_id')
         return Bid.objects.filter(item_id=item_id).order_by('-amount')
-
 
 class BidCreateAPIView(generics.CreateAPIView):
     queryset = Bid.objects.all()
