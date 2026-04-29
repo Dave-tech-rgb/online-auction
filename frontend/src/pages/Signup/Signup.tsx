@@ -23,7 +23,6 @@ const Signup: React.FC = () => {
 
     setLoading(true);
     try {
-      
       await api.post('auth/users/', { email, name, password, re_password });
       navigate('/login');
     } catch (err: any) {

@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     'djoser',
     'user',       
     'auction',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -110,3 +112,18 @@ CORS_ALLOW_ALL_ORIGINS = True
 import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'duvxzqeeg',
+    'API_KEY': '961679219173533',
+    'API_SECRET': 'yThp-twDdTCOwz779gKIwawy4zQ'
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
